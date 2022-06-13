@@ -30,9 +30,17 @@ public class prozor{
 				
 				JMenu file=new JMenu("File");
 				menubar.add(file);
-				JMenuItem novi=new JMenuItem("New");
+				JMenu novi=new JMenu("New");
+				JMenuItem pro_zap=new JMenuItem("Zaposleni");
+				JMenuItem pro_soft=new JMenuItem("Softver");
+				novi.add(pro_zap);
+				novi.add(pro_soft);
 				file.add(novi);
-				JMenuItem open=new JMenuItem("Open");
+				JMenu open=new JMenu("Open");
+				JMenuItem tab_zap=new JMenuItem("Zaposleni");
+				JMenuItem tab_soft=new JMenuItem("Softver");
+				open.add(tab_zap);
+				open.add(tab_soft);
 				file.add(open);
 				JMenuItem exit=new JMenuItem("Exit");
 				file.add(exit);
@@ -41,9 +49,23 @@ public class prozor{
 				
 				JMenu edit=new JMenu("Edit");
 				menubar.add(edit);
+				JMenu izmena=new JMenu("Edit");
+				JMenuItem edit_zap=new JMenuItem("Zaposleni");
+				JMenuItem edit_soft=new JMenuItem("Softver");
+				izmena.add(edit_zap);
+				izmena.add(edit_soft);
+				edit.add(izmena);
+				JMenu delete=new JMenu("Delete");
+				JMenuItem del_zap=new JMenuItem("Zaposleni");
+				JMenuItem del_soft=new JMenuItem("Softver");
+				delete.add(del_zap);
+				delete.add(del_soft);
+				edit.add(delete);
+				
 				JMenu help=new JMenu("Help");
 				menubar.add(help);
-				
+				JMenuItem about=new JMenuItem("About");
+				help.add(about);
 				
 				JTabbedPane tabbedPane = new JTabbedPane();
 				window.add(tabbedPane);
