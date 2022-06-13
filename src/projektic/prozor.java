@@ -84,20 +84,49 @@ public class prozor{
 				JMenuItem edit_zap=new JMenuItem("Zaposleni");
 				JMenuItem edit_soft=new JMenuItem("Softver");
 				izmena.add(edit_zap);
+				edit_zap.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent e) {
+						tabbedPane.addTab("Izmena Zaposleni",label);
+					}
+				});
 				izmena.add(edit_soft);
+				edit_soft.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent e) {
+						tabbedPane.addTab("Izmena Softvera",label);
+					}
+				});
 				edit.add(izmena);
 				JMenu delete=new JMenu("Delete");
 				JMenuItem del_zap=new JMenuItem("Zaposleni");
 				JMenuItem del_soft=new JMenuItem("Softver");
 				delete.add(del_zap);
+				del_zap.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent e) {
+						tabbedPane.addTab("Obrisi Zaposleni",label);
+					}
+				});
 				delete.add(del_soft);
+				del_soft.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent e) {
+						tabbedPane.addTab("Obrisi Softver",label);
+					}
+				});
 				edit.add(delete);
 				
 				JMenu help=new JMenu("Help");
 				menubar.add(help);
 				JMenuItem about=new JMenuItem("About");
 				help.add(about);
-				
+				about.addActionListener(new ActionListener() {
+
+                    public void actionPerformed(ActionEvent e) {
+                        tabbedPane.addTab("O nama",label);
+                    }
+                });
 				
 				
 				/*
@@ -118,3 +147,4 @@ public class prozor{
 			}
 		}
 }
+
