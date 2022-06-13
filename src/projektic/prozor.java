@@ -1,101 +1,68 @@
 package projektic;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
-
-import projektic.JTabbedPaneCloseButton;
-import projektic.TableTab;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+//import java.awt.event.ActionListener;
 
 public class prozor{
 		public static void main(String[] args)
 		{
 			
-			myframe frame=new myframe();
-			frame.setVisible(true);
+			new prozor();
 		}
-}
-class myframe extends JFrame{
-	/**
-	 * 
-	 */
-	int tabNumber = 0;
-	
-	private static final long serialVersionUID = 1L;
-	
-	private JToolBar mainToolbar;
-	private JButton addTabButton;
-	private JTabbedPaneCloseButton tabbedPane;
-	
-	public void createToolbar() {
-		this.mainToolbar = new JToolBar(JToolBar.HORIZONTAL);
-		this.mainToolbar.setFloatable(false);
 		
-		addTabButton = new JButton(createImageIcon("img/img.png", true, 32, 32));
-		addTabButton.setToolTipText("Add new tab.");
-		addTabButton.addActionListener(new ActionListener() {
+		public prozor(){
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				addMyTabToTabbedPane("Table " + (++tabNumber));
-			}
-		});
-		this.mainToolbar.add(addTabButton);
-		this.add(this.mainToolbar, BorderLayout.NORTH);
-	}
-	
-	private void createTabbedPane() {
-		this.tabbedPane = new JTabbedPaneCloseButton();
-		this.add(this.tabbedPane, BorderLayout.CENTER);
-	}
-	
-	private void addMyTabToTabbedPane(String tableName) {
-		// load icot
-		ImageIcon icon = createImageIcon("images/img.png", true, 16, 16);
-		// instantiate tab
-		TableTab mt = new TableTab(tableName);
-		// add tab to tabbed pane
-		tabbedPane.addTab(tableName, icon, mt, "Tab Tooltip");
-	}
-	
-	protected static ImageIcon createImageIcon(String path, boolean scaleImage, int width, int height) {
-		if (scaleImage) {
-			// how to scale image
-			ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
-			Image image = imageIcon.getImage(); // transform it
-			Image newimg = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-			imageIcon = new ImageIcon(newimg); // transform it back
-			return imageIcon;
-
-		} else {
-			return new ImageIcon(path);
+				JFrame window=new JFrame();
+				window.setTitle("Pojekat");
+				// skinuto sa stack overflow-a
+				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+				int sirina=(int) screenSize.getWidth();
+				int visina=(int )screenSize.getHeight();
+				window.setSize(sirina/4*3,visina/4*3);
+				window.setLocation(sirina/8, visina/8);
+				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			
+				JMenuBar menubar= new JMenuBar();
+				window.setJMenuBar(menubar);
+				//file bar
+				
+				JMenu file=new JMenu("File");
+				menubar.add(file);
+				JMenuItem novi=new JMenuItem("New");
+				file.add(novi);
+				JMenuItem open=new JMenuItem("Open");
+				file.add(open);
+				JMenuItem exit=new JMenuItem("Exit");
+				file.add(exit);
+				exit.addActionListener(new zatvori());
+				//edit
+				
+				JMenu edit=new JMenu("Edit");
+				menubar.add(edit);
+				JMenu help=new JMenu("Help");
+				menubar.add(help);
+				
+				
+				JTabbedPane tabbedPane = new JTabbedPane();
+				window.add(tabbedPane);
+				tabbedPane.setFocusable(false);
+				//tabbedPane.setPreferredSize(new Dimension(50,50));
+				
+				JLabel label1=new JLabel("egafgawfaaga");
+				JLabel label2=new JLabel("dfawfa");
+				
+				tabbedPane.add("Zaposleni",label1);
+				tabbedPane.add("Softver",label2);
+				
+				window.setVisible(true);
+				
 		}
-	}
-	
-	public myframe() {
-		this.createToolbar();
-		setTitle("Pojekat");
-		// skinuto sa stack overflow-a
-		Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
-		int sirina=(int) screenSize.getWidth();
-		int visina=(int )screenSize.getHeight();
-		setSize(sirina/4*3,visina/4*3);
-		setLocation(sirina/8, visina/8);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel panel= new JPanel();
-		add(panel);
+		static class zatvori implements ActionListener{
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
 		}
 }
 
