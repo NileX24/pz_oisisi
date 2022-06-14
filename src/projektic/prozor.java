@@ -3,6 +3,9 @@ package projektic;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
+import java.awt.Image;
+import java.util.*;
 //import java.awt.event.ActionListener;
 
 public class prozor{
@@ -28,6 +31,10 @@ public class prozor{
 				JTabbedPane tabbedPane = new JTabbedPane();
 				window.add(tabbedPane);
 				tabbedPane.setFocusable(false);
+				
+				JToolBar tb=new JToolBar();
+				
+				
 				JLabel label=new JLabel("Placeholder");
 				
 				
@@ -44,14 +51,14 @@ public class prozor{
 				pro_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Dodavanje Zaposlenih",label);
+						tabbedPane.addTab("Dodaj Zaposlenih",label);
 					}
 				});
 				novi.add(pro_soft);
 				pro_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Dodavanje Softvera",label);
+						tabbedPane.addTab("Dodaj Softvera",label);
 					}
 				});
 				file.add(novi);
@@ -128,17 +135,53 @@ public class prozor{
                     }
                 });
 				
+				final ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
+				final ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
+				final ImageIcon icon_del = new ImageIcon(getClass().getResource("delete.png"));
+				JButton btn_plus=new JButton("");
+				btn_plus.setIcon(icon_plus);
+				tb.add(btn_plus);
+				JButton btn_edit=new JButton("");
+				btn_edit.setIcon(icon_edit);
+				tb.add(btn_edit);
+				JButton btn_del=new JButton("");
+				btn_del.setIcon(icon_del);
+				tb.add(btn_del);
+				window.add(tb,BorderLayout.NORTH);
 				
-				/*
+				btn_plus.addActionListener(new ActionListener() {
+
+                    public void actionPerformed(ActionEvent e) {
+                    	//kod
+                    }
+                });
+				btn_edit.addActionListener(new ActionListener() {
+
+                    public void actionPerformed(ActionEvent e) {
+                    	//kod
+                    }
+                });
+				btn_del.addActionListener(new ActionListener() {
+
+                    public void actionPerformed(ActionEvent e) {
+                    	//kod
+                    }
+                });
+				//preuzeto sa stackoverflow-a
+				SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy"); 
+				Date date=new Date();
+				JLabel status=new JLabel(formatter.format(date),SwingConstants.RIGHT);
+				window.add(status,BorderLayout.SOUTH);
+				
+				
 				JLabel label1=new JLabel("egafgawfaaga");
 				JLabel label2=new JLabel("dfawfa");
 				
 				tabbedPane.add("Zaposleni",label1);
 				tabbedPane.add("Softver",label2);
-				*/
+				
 				
 				window.setVisible(true);
-				
 				
 		}
 		static class zatvori implements ActionListener{
