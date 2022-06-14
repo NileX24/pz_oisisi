@@ -26,6 +26,9 @@ public class prozor{
 				window.setSize(sirina/4*3,visina/4*3);
 				window.setLocation(sirina/8, visina/8);
 				window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				window.setMaximumSize(screenSize);
+				screenSize= new Dimension(sirina/3,visina/4*3);
+				window.setMinimumSize(screenSize);
 			
 				
 				JTabbedPane tabbedPane = new JTabbedPane();
@@ -36,6 +39,7 @@ public class prozor{
 				
 				
 				JLabel label=new JLabel("Placeholder");
+				JPanel panel=new JPanel();
 				
 				
 				JMenuBar menubar= new JMenuBar();
@@ -51,14 +55,148 @@ public class prozor{
 				pro_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Dodaj Zaposlenih",label);
+						
+						tabbedPane.addTab("Dodaj Zaposlene",panel);
+						panel.removeAll();
+						panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
+						panel.setLayout(new GridLayout(25,25));
+						
+						JLabel promenljiv=new JLabel("Unesi Zaposlene",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						promenljiv=new JLabel("Ime : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_001=new JTextField();
+						polje_001.setHorizontalAlignment(JTextField.CENTER);
+						polje_001.setBorder(null);
+						panel.add(polje_001);
+						
+						promenljiv=new JLabel("Prezime : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_002=new JTextField();
+						polje_002.setHorizontalAlignment(JTextField.CENTER);
+						polje_002.setBorder(null);
+						panel.add(polje_002);
+						
+						promenljiv=new JLabel("JMBG : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_003=new JTextField();
+						polje_003.setHorizontalAlignment(JTextField.CENTER);
+						polje_003.setBorder(null);
+						polje_003.addKeyListener(new KeyAdapter() {
+							public void keyTyped(KeyEvent e) {
+								if(polje_003.getText().length() >=13)
+									e.consume();
+								char key=e.getKeyChar();
+								if(!(key>='0' && key<='9'))
+									e.consume();
+							}
+						});
+						panel.add(polje_003);
+						
+						promenljiv=new JLabel("Datum Rodjenja : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_004=new JTextField();
+						polje_004.setHorizontalAlignment(JTextField.CENTER);
+						polje_004.setBorder(null);
+						polje_004.addKeyListener(new KeyAdapter() {
+							public void keyTyped(KeyEvent e) {
+								if(polje_004.getText().length() >=10)
+									e.consume();
+								char key=e.getKeyChar();
+								if(!(key>='0' && key<='9'))
+									e.consume();
+								String slash=polje_004.getText();
+								if(polje_004.getText().length()==2||polje_004.getText().length()==5)
+									polje_004.setText(slash+".");
+							}
+						});
+						panel.add(polje_004);
+						
+						promenljiv=new JLabel("Adresa Stanovanja : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_005=new JTextField();
+						polje_005.setHorizontalAlignment(JTextField.CENTER);
+						polje_005.setBorder(null);
+						panel.add(polje_005);
+						
+						promenljiv=new JLabel("Softveri : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_006=new JTextField();
+						polje_006.setHorizontalAlignment(JTextField.CENTER);
+						polje_006.setBorder(null);
+						panel.add(polje_006);
+						
+						
 					}
 				});
 				novi.add(pro_soft);
 				pro_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Dodaj Softvera",label);
+						tabbedPane.addTab("Dodaj Softver",panel);
+						
+						panel.removeAll();
+						
+						panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
+						panel.setLayout(new GridLayout(25,25));
+						
+						JLabel promenljiv=new JLabel("Unesi Softvere",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						promenljiv=new JLabel("Naziv : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_001=new JTextField();
+						polje_001.setHorizontalAlignment(JTextField.CENTER);
+						polje_001.setBorder(null);
+						panel.add(polje_001);
+						
+						promenljiv=new JLabel("Cetkice : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_002=new JTextField();
+						polje_002.setHorizontalAlignment(JTextField.CENTER);
+						polje_002.setBorder(null);
+						panel.add(polje_002);
+						
+						promenljiv=new JLabel("Boja : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_003=new JTextField();
+						polje_003.setHorizontalAlignment(JTextField.CENTER);
+						polje_003.setBorder(null);
+						panel.add(polje_003);
+						
+						promenljiv=new JLabel("Format Fajla : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_004=new JTextField();
+						polje_004.setHorizontalAlignment(JTextField.CENTER);
+						polje_004.setBorder(null);
+						panel.add(polje_004);
+						
+						promenljiv=new JLabel("Alati za animiranje : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_005=new JTextField();
+						polje_005.setHorizontalAlignment(JTextField.CENTER);
+						polje_005.setBorder(null);
+						panel.add(polje_005);
+						
+						promenljiv=new JLabel("Render : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_006=new JTextField();
+						polje_006.setHorizontalAlignment(JTextField.CENTER);
+						polje_006.setBorder(null);
+						panel.add(polje_006);
 					}
 				});
 				file.add(novi);
@@ -135,11 +273,11 @@ public class prozor{
                     }
                 });
 				
-				final ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
+				/*final ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
 				final ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
 				final ImageIcon icon_del = new ImageIcon(getClass().getResource("delete.png"));
 				JButton btn_plus=new JButton("");
-				btn_plus.setIcon(icon_plus);
+				//btn_plus.setIcon(icon_plus);
 				tb.add(btn_plus);
 				JButton btn_edit=new JButton("");
 				btn_edit.setIcon(icon_edit);
@@ -166,7 +304,7 @@ public class prozor{
                     public void actionPerformed(ActionEvent e) {
                     	//kod
                     }
-                });
+                }); */
 				//preuzeto sa stackoverflow-a
 				SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy"); 
 				Date date=new Date();
@@ -174,11 +312,28 @@ public class prozor{
 				window.add(status,BorderLayout.SOUTH);
 				
 				
-				JLabel label1=new JLabel("egafgawfaaga");
-				JLabel label2=new JLabel("dfawfa");
+				JPanel panel_zap=new JPanel();
+				JPanel panel_soft=new JPanel();
 				
-				tabbedPane.add("Zaposleni",label1);
-				tabbedPane.add("Softver",label2);
+				tabbedPane.add("Zaposleni",panel_zap);
+				panel_zap.setLayout(new GridLayout(1,0));
+				String[][] data_zap= {{"1","1","1","1","1","1","1"}};
+				String[] redovi_zap= {"Ime","Prezime","JMBG","Datum Rodjenja","Email","Adresa","Softver"};
+				JTable tabela_zap=new JTable(data_zap,redovi_zap);
+				JScrollPane scroll_zap=new JScrollPane(tabela_zap);
+				scroll_zap.setBorder(null);
+				panel_zap.add(scroll_zap);
+				
+				
+				
+				tabbedPane.add("Softver",panel_soft);
+				panel_soft.setLayout(new GridLayout(1,0));
+				String[][] data_soft= {{"1","1","1","1","1","1"}};
+				String[] redovi_soft= {"Naziv","Cetkice","Fajl Format","Alati","Render","Boja"};
+				JTable tabela_soft=new JTable(data_soft,redovi_soft);
+				JScrollPane scroll_soft=new JScrollPane(tabela_soft);
+				scroll_soft.setBorder(null);
+				panel_soft.add(scroll_soft);
 				
 				
 				window.setVisible(true);
