@@ -273,11 +273,11 @@ public class prozor{
                     }
                 });
 				
-				/*final ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
-				final ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
-				final ImageIcon icon_del = new ImageIcon(getClass().getResource("delete.png"));
+				 ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
+				 ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
+				 ImageIcon icon_del = new ImageIcon(getClass().getResource("delete.png"));
 				JButton btn_plus=new JButton("");
-				//btn_plus.setIcon(icon_plus);
+				btn_plus.setIcon(icon_plus);
 				tb.add(btn_plus);
 				JButton btn_edit=new JButton("");
 				btn_edit.setIcon(icon_edit);
@@ -304,7 +304,7 @@ public class prozor{
                     public void actionPerformed(ActionEvent e) {
                     	//kod
                     }
-                }); */
+                }); 
 				//preuzeto sa stackoverflow-a
 				SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy"); 
 				Date date=new Date();
