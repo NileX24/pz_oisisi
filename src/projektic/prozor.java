@@ -1,14 +1,18 @@
 package projektic;
 
+import projektic.Zaposleni;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.awt.Image;
 import java.util.*;
+import java.util.List;
 //import java.awt.event.ActionListener;
 
 public class prozor{
+		List<Zaposleni> zaposleni=new ArrayList<Zaposleni>();
+		int zap_count=-1;
 		public static void main(String[] args)
 		{
 			
@@ -16,7 +20,7 @@ public class prozor{
 		}
 		
 		public prozor(){
-			
+				
 				JFrame window=new JFrame();
 				window.setTitle("Pojekat");
 				// skinuto sa stack overflow-a
@@ -29,7 +33,8 @@ public class prozor{
 				window.setMaximumSize(screenSize);
 				screenSize= new Dimension(sirina/3,visina/4*3);
 				window.setMinimumSize(screenSize);
-			
+				
+				
 				
 				JTabbedPane tabbedPane = new JTabbedPane();
 				window.add(tabbedPane);
@@ -117,7 +122,7 @@ public class prozor{
 						});
 						panel.add(polje_004);
 						
-						promenljiv=new JLabel("Adresa Stanovanja : ",SwingConstants.CENTER);
+						promenljiv=new JLabel("Email : ",SwingConstants.CENTER);
 						panel.add(promenljiv);
 						
 						JTextField polje_005=new JTextField();
@@ -125,13 +130,23 @@ public class prozor{
 						polje_005.setBorder(null);
 						panel.add(polje_005);
 						
-						promenljiv=new JLabel("Softveri : ",SwingConstants.CENTER);
+						
+						promenljiv=new JLabel("Adresa Stanovanja : ",SwingConstants.CENTER);
 						panel.add(promenljiv);
 						
 						JTextField polje_006=new JTextField();
 						polje_006.setHorizontalAlignment(JTextField.CENTER);
 						polje_006.setBorder(null);
 						panel.add(polje_006);
+						
+						promenljiv=new JLabel("Softveri : ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JTextField polje_007=new JTextField();
+						polje_007.setHorizontalAlignment(JTextField.CENTER);
+						polje_007.setBorder(null);
+						panel.add(polje_007);
+						
 						promenljiv=new JLabel("  ",SwingConstants.CENTER);
 						panel.add(promenljiv);
 						
@@ -144,13 +159,14 @@ public class prozor{
 								proveri.setSize(400, 200);
 								proveri.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 								proveri.setLayout(new GridLayout(0,1));
-								String[] labela= new String[6];
+								String[] labela= new String[7];
 								labela[0]=polje_001.getText();
 								labela[1]=polje_002.getText();
 								labela[2]=polje_003.getText();
 								labela[3]=polje_004.getText();
 								labela[4]=polje_005.getText();
 								labela[5]=polje_006.getText();
+								labela[6]=polje_007.getText();
 								int count=0;
 								for(int i=0;i<6;i++)
 									if(labela[i].isEmpty())
@@ -186,13 +202,24 @@ public class prozor{
 									
 									da.addActionListener(new ActionListener(){
 										public void actionPerformed(ActionEvent e) {
+											Zaposleni radnik=new Zaposleni();
+											radnik.ime=labela[0];
+											radnik.prezime=labela[1];
+											radnik.jmbg=labela[2];
+											radnik.datum_rodjenja=labela[3];
+											radnik.email=labela[4];
+											radnik.adresa=labela[5];
+											radnik.softver=labela[6];
+											zaposleni.add(radnik);
 											polje_001.setText(null);
 											polje_002.setText(null);
 											polje_003.setText(null);
 											polje_004.setText(null);
 											polje_005.setText(null);
 											polje_006.setText(null);
+											polje_007.setText(null);
 											proveri.dispose();
+											
 										}
 									});
 									
