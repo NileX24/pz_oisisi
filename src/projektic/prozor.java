@@ -132,7 +132,86 @@ public class prozor{
 						polje_006.setHorizontalAlignment(JTextField.CENTER);
 						polje_006.setBorder(null);
 						panel.add(polje_006);
+						promenljiv=new JLabel("  ",SwingConstants.CENTER);
+						panel.add(promenljiv);
 						
+						JButton pokupi_zap=new JButton("Upisi Zaposlenog");
+						
+						pokupi_zap.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								
+								JFrame proveri=new JFrame();
+								proveri.setSize(400, 200);
+								proveri.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+								proveri.setLayout(new GridLayout(0,1));
+								String[] labela= new String[6];
+								labela[0]=polje_001.getText();
+								labela[1]=polje_002.getText();
+								labela[2]=polje_003.getText();
+								labela[3]=polje_004.getText();
+								labela[4]=polje_005.getText();
+								labela[5]=polje_006.getText();
+								int count=0;
+								for(int i=0;i<6;i++)
+									if(labela[i].isEmpty())
+										count++;
+								
+								if(count>0)
+								{
+									proveri.setTitle("Greska");
+									JLabel greska=new JLabel("Sva polja moraju biti popunjena",SwingConstants.CENTER);
+									proveri.add(greska);
+									
+									JButton kraj=new JButton("CLOSE");
+									proveri.add(kraj);
+									
+									
+									kraj.addActionListener(new ActionListener(){
+										public void actionPerformed(ActionEvent e) {
+											proveri.dispose();
+										}
+									});
+									
+									proveri.setVisible(true);
+									proveri.setLocation(sirina/5*2, visina/5*2);
+								}
+								else {
+									proveri.setTitle("Unos");
+									JLabel upseh=new JLabel("Da li ste sigurni da zelite da unesete Zaposlenog",SwingConstants.CENTER);
+									proveri.add(upseh);
+									
+									JButton da=new JButton("DA");
+									proveri.add(da);
+									
+									
+									da.addActionListener(new ActionListener(){
+										public void actionPerformed(ActionEvent e) {
+											polje_001.setText(null);
+											polje_002.setText(null);
+											polje_003.setText(null);
+											polje_004.setText(null);
+											polje_005.setText(null);
+											polje_006.setText(null);
+											proveri.dispose();
+										}
+									});
+									
+									
+									JButton ne=new JButton("NE");
+									proveri.add(ne);
+									
+									ne.addActionListener(new ActionListener(){
+										public void actionPerformed(ActionEvent e) {
+											proveri.dispose();
+										}
+									});
+									
+									proveri.setVisible(true);
+									proveri.setLocation(sirina/5*2, visina/5*2);
+								}
+							}
+						});
+						panel.add(pokupi_zap);
 						
 					}
 				});
@@ -197,6 +276,87 @@ public class prozor{
 						polje_006.setHorizontalAlignment(JTextField.CENTER);
 						polje_006.setBorder(null);
 						panel.add(polje_006);
+						
+						promenljiv=new JLabel("  ",SwingConstants.CENTER);
+						panel.add(promenljiv);
+						
+						JButton pokupi_soft=new JButton("Upisi Softver");
+						
+						pokupi_soft.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								
+								JFrame proveri=new JFrame();
+								proveri.setSize(400, 200);
+								proveri.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+								proveri.setLayout(new GridLayout(0,1));
+								String[] labela= new String[6];
+								labela[0]=polje_001.getText();
+								labela[1]=polje_002.getText();
+								labela[2]=polje_003.getText();
+								labela[3]=polje_004.getText();
+								labela[4]=polje_005.getText();
+								labela[5]=polje_006.getText();
+								int count=0;
+								for(int i=0;i<6;i++)
+									if(labela[i].isEmpty())
+										count++;
+								
+								if(count>0)
+								{
+									proveri.setTitle("Greska");
+									JLabel greska=new JLabel("Sva polja moraju biti popunjena",SwingConstants.CENTER);
+									proveri.add(greska);
+									
+									JButton kraj=new JButton("CLOSE");
+									proveri.add(kraj);
+									
+									
+									kraj.addActionListener(new ActionListener(){
+										public void actionPerformed(ActionEvent e) {
+											proveri.dispose();
+										}
+									});
+									
+									proveri.setVisible(true);
+									proveri.setLocation(sirina/5*2, visina/5*2);
+								}
+								else {
+									proveri.setTitle("Unos");
+									JLabel upseh=new JLabel("Da li ste sigurni da zelite da unesete Zaposlenog",SwingConstants.CENTER);
+									proveri.add(upseh);
+									
+									JButton da=new JButton("DA");
+									proveri.add(da);
+									
+									
+									da.addActionListener(new ActionListener(){
+										public void actionPerformed(ActionEvent e) {
+											polje_001.setText(null);
+											polje_002.setText(null);
+											polje_003.setText(null);
+											polje_004.setText(null);
+											polje_005.setText(null);
+											polje_006.setText(null);
+											proveri.dispose();
+										}
+									});
+									
+									
+									JButton ne=new JButton("NE");
+									proveri.add(ne);
+									
+									ne.addActionListener(new ActionListener(){
+										public void actionPerformed(ActionEvent e) {
+											proveri.dispose();
+										}
+									});
+									
+									proveri.setVisible(true);
+									proveri.setLocation(sirina/5*2, visina/5*2);
+								}
+							}
+						});
+						panel.add(pokupi_soft);
 					}
 				});
 				file.add(novi);
@@ -273,9 +433,9 @@ public class prozor{
                     }
                 });
 				
-				 ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
-				 ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
-				 ImageIcon icon_del = new ImageIcon(getClass().getResource("delete.png"));
+				ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
+				ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
+				ImageIcon icon_del = new ImageIcon(getClass().getResource("delete.png"));
 				JButton btn_plus=new JButton("");
 				btn_plus.setIcon(icon_plus);
 				tb.add(btn_plus);
