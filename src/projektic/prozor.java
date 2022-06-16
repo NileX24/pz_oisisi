@@ -8,11 +8,12 @@ import java.text.SimpleDateFormat;
 import java.awt.Image;
 import java.util.*;
 import java.util.List;
+import javax.swing.event.ChangeEvent;
 //import java.awt.event.ActionListener;
 
 public class prozor{
 		List<Zaposleni> zaposleni=new ArrayList<Zaposleni>();
-		int zap_count=-1;
+		Zaposleni radnik=new Zaposleni();
 		public static void main(String[] args)
 		{
 			
@@ -34,11 +35,36 @@ public class prozor{
 				screenSize= new Dimension(sirina/3,visina/4*3);
 				window.setMinimumSize(screenSize);
 				
+				radnik.ime="Petar";
+				radnik.prezime="Petrovic";
+				radnik.jmbg="1234567890123";
+				radnik.datum_rodjenja="12.12.1976";
+				radnik.email="petarpetrovic@gmail.com";
+				radnik.adresa="Futoska 1234,Novi Sad";
+				radnik.softver="3Ds Max";
+				zaposleni.add(radnik);
 				
 				
 				JTabbedPane tabbedPane = new JTabbedPane();
 				window.add(tabbedPane);
 				tabbedPane.setFocusable(false);
+				
+				JPanel panel_zap=new JPanel();
+				JPanel panel_soft=new JPanel();
+				
+				tabbedPane.add("Zaposleni",panel_zap);
+				panel_zap.setLayout(new GridLayout(1,0));
+				
+				ispisiZaposlene(panel_zap,zaposleni);
+				
+				tabbedPane.add("Softver",panel_soft);
+				panel_soft.setLayout(new GridLayout(1,0));
+				String[][] data_soft= {{"1","1","1","1","1","1"}};
+				String[] redovi_soft= {"Naziv","Cetkice","Fajl Format","Alati","Render","Boja"};
+				JTable tabela_soft=new JTable(data_soft,redovi_soft);
+				JScrollPane scroll_soft=new JScrollPane(tabela_soft);
+				scroll_soft.setBorder(null);
+				panel_soft.add(scroll_soft);
 				
 				JToolBar tb=new JToolBar();
 				
@@ -202,15 +228,16 @@ public class prozor{
 									
 									da.addActionListener(new ActionListener(){
 										public void actionPerformed(ActionEvent e) {
-											Zaposleni radnik=new Zaposleni();
-											radnik.ime=labela[0];
-											radnik.prezime=labela[1];
-											radnik.jmbg=labela[2];
-											radnik.datum_rodjenja=labela[3];
-											radnik.email=labela[4];
-											radnik.adresa=labela[5];
-											radnik.softver=labela[6];
-											zaposleni.add(radnik);
+											Zaposleni radnik1=new Zaposleni();
+											radnik1.ime=labela[0];
+											radnik1.prezime=labela[1];
+											radnik1.jmbg=labela[2];
+											radnik1.datum_rodjenja=labela[3];
+											radnik1.email=labela[4];
+											radnik1.adresa=labela[5];
+											radnik1.softver=labela[6];
+											zaposleni.add(radnik1);
+												System.out.println(zaposleni);
 											polje_001.setText(null);
 											polje_002.setText(null);
 											polje_003.setText(null);
@@ -218,6 +245,7 @@ public class prozor{
 											polje_005.setText(null);
 											polje_006.setText(null);
 											polje_007.setText(null);
+											ispisiZaposlene(panel_zap,zaposleni);
 											proveri.dispose();
 											
 										}
@@ -499,28 +527,7 @@ public class prozor{
 				window.add(status,BorderLayout.SOUTH);
 				
 				
-				JPanel panel_zap=new JPanel();
-				JPanel panel_soft=new JPanel();
 				
-				tabbedPane.add("Zaposleni",panel_zap);
-				panel_zap.setLayout(new GridLayout(1,0));
-				String[][] data_zap= {{"1","1","1","1","1","1","1"}};
-				String[] redovi_zap= {"Ime","Prezime","JMBG","Datum Rodjenja","Email","Adresa","Softver"};
-				JTable tabela_zap=new JTable(data_zap,redovi_zap);
-				JScrollPane scroll_zap=new JScrollPane(tabela_zap);
-				scroll_zap.setBorder(null);
-				panel_zap.add(scroll_zap);
-				
-				
-				
-				tabbedPane.add("Softver",panel_soft);
-				panel_soft.setLayout(new GridLayout(1,0));
-				String[][] data_soft= {{"1","1","1","1","1","1"}};
-				String[] redovi_soft= {"Naziv","Cetkice","Fajl Format","Alati","Render","Boja"};
-				JTable tabela_soft=new JTable(data_soft,redovi_soft);
-				JScrollPane scroll_soft=new JScrollPane(tabela_soft);
-				scroll_soft.setBorder(null);
-				panel_soft.add(scroll_soft);
 				
 				
 				window.setVisible(true);
@@ -531,5 +538,29 @@ public class prozor{
 				System.exit(0);
 			}
 		}
+		static void ispisiZaposlene(JPanel panel,List<Zaposleni> zaposleni)
+		{
+			panel.removeAll();
+			String[][] data_zap= new String[zaposleni.size()][7];
+			int i=0;
+			for (Zaposleni z:zaposleni) {
+				
+				data_zap[i][0]=z.ime;
+				data_zap[i][1]=z.prezime;
+				data_zap[i][2]=z.jmbg;
+				data_zap[i][3]=z.datum_rodjenja;
+				data_zap[i][4]=z.email;
+				data_zap[i][5]=z.adresa;
+				data_zap[i][6]=z.softver;
+				i+=1;
+				
+			}
+			String[] redovi_zap= {"Ime","Prezime","JMBG","Datum Rodjenja","Email","Adresa","Softver"};
+			JTable tabela_zap=new JTable(data_zap,redovi_zap);
+			JScrollPane scroll_zap=new JScrollPane(tabela_zap);
+			scroll_zap.setBorder(null);
+			panel.add(scroll_zap);
+		}
+		
 }
 
