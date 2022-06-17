@@ -14,6 +14,8 @@ import javax.swing.event.ChangeEvent;
 public class prozor{
 		List<Zaposleni> zaposleni=new ArrayList<Zaposleni>();
 		Zaposleni radnik=new Zaposleni();
+		List<Softver> softver=new ArrayList<Softver>();
+		Softver program=new Softver();
 		public static void main(String[] args)
 		{
 			
@@ -44,6 +46,13 @@ public class prozor{
 				radnik.softver="3Ds Max";
 				zaposleni.add(radnik);
 				
+				program.naziv="3DS max";
+				program.cetkica="standard";
+				program.format="fbx";
+				program.alat="Cut";
+				program.render="Vray";
+				softver.add(program);
+				
 				
 				JTabbedPane tabbedPane = new JTabbedPane();
 				window.add(tabbedPane);
@@ -59,12 +68,8 @@ public class prozor{
 				
 				tabbedPane.add("Softver",panel_soft);
 				panel_soft.setLayout(new GridLayout(1,0));
-				String[][] data_soft= {{"1","1","1","1","1","1"}};
-				String[] redovi_soft= {"Naziv","Cetkice","Fajl Format","Alati","Render","Boja"};
-				JTable tabela_soft=new JTable(data_soft,redovi_soft);
-				JScrollPane scroll_soft=new JScrollPane(tabela_soft);
-				scroll_soft.setBorder(null);
-				panel_soft.add(scroll_soft);
+				
+				ispisiSoftver(panel_soft,softver);
 				
 				JToolBar tb=new JToolBar();
 				
@@ -386,12 +391,20 @@ public class prozor{
 									
 									da.addActionListener(new ActionListener(){
 										public void actionPerformed(ActionEvent e) {
+											Softver softveri1=new Softver();
+											softveri1.naziv=labela[0];
+											softveri1.cetkica=labela[1];
+											softveri1.format=labela[3];
+											softveri1.alat=labela[4];
+											softveri1.render=labela[5];
+											softver.add(softveri1);
 											polje_001.setText(null);
 											polje_002.setText(null);
 											polje_003.setText(null);
 											polje_004.setText(null);
 											polje_005.setText(null);
 											polje_006.setText(null);
+											ispisiSoftver(panel_soft,softver);
 											proveri.dispose();
 										}
 									});
@@ -560,6 +573,27 @@ public class prozor{
 			JScrollPane scroll_zap=new JScrollPane(tabela_zap);
 			scroll_zap.setBorder(null);
 			panel.add(scroll_zap);
+		}
+		static void ispisiSoftver(JPanel panel,List<Softver> softver)
+		{
+			panel.removeAll();
+			String[][] data= new String[softver.size()][5];
+			int i=0;
+			for (Softver z:softver) {
+				
+				data[i][0]=z.naziv;
+				data[i][1]=z.cetkica;
+				data[i][2]=z.format;
+				data[i][3]=z.alat;
+				data[i][4]=z.render;
+				i+=1;
+				
+			}
+			String[] redovi= {"Naziv","Cetkica","Format","Alat","Render"};
+			JTable tabela=new JTable(data,redovi);
+			JScrollPane scroll=new JScrollPane(tabela);
+			scroll.setBorder(null);
+			panel.add(scroll);
 		}
 		
 }
