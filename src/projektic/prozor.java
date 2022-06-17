@@ -435,14 +435,18 @@ public class prozor{
 				tab_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Tabela Zaposlenih",label);
+						tabbedPane.addTab("Tabela Zaposlenih",panel);
+						panel.setLayout(new GridLayout(1,0));
+						ispisiZaposlene(panel,zaposleni);
 					}
 				});
 				open.add(tab_soft);
 				tab_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Tabela Softvera",label);
+						tabbedPane.addTab("Tabela Softvera",panel);
+						panel.setLayout(new GridLayout(1,0));
+						ispisiSoftver(panel,softver);
 					}
 				});
 				file.add(open);
