@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 //import java.awt.event.ActionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class prozor{
 		static List<Zaposleni> zaposleni=new ArrayList<Zaposleni>();
@@ -92,7 +94,7 @@ public class prozor{
 				
 				JLabel label=new JLabel("Placeholder");
 				JPanel panel=new JPanel();
-				
+				JPanel panel2=new JPanel();
 				
 				JMenuBar menubar= new JMenuBar();
 				window.setJMenuBar(menubar);
@@ -109,6 +111,7 @@ public class prozor{
 					public void actionPerformed(ActionEvent e) {
 						
 						tabbedPane.addTab("Dodaj Zaposlene",panel);
+						panel.removeAll();
 						ispisiUnosZaposlenog(panel, sirina, visina,panel_zap);
 					}
 				});
@@ -117,6 +120,7 @@ public class prozor{
 
 					public void actionPerformed(ActionEvent e) {
 						tabbedPane.addTab("Dodaj Softver",panel);
+						panel.removeAll();
 						ispisiUnosSoftvera(panel, sirina, visina, panel_soft);
 					}
 				});
@@ -129,6 +133,7 @@ public class prozor{
 
 					public void actionPerformed(ActionEvent e) {
 						tabbedPane.addTab("Tabela Zaposlenih",panel);
+						panel.removeAll();
 						panel.setLayout(new GridLayout(1,0));
 						ispisiZaposlene(panel,zaposleni);
 					}
@@ -138,6 +143,7 @@ public class prozor{
 
 					public void actionPerformed(ActionEvent e) {
 						tabbedPane.addTab("Tabela Softvera",panel);
+						panel.removeAll();
 						panel.setLayout(new GridLayout(1,0));
 						ispisiSoftver(panel,softver);
 					}
@@ -154,12 +160,41 @@ public class prozor{
 				JMenuItem edit_zap=new JMenuItem("Zaposleni");
 				JMenuItem edit_soft=new JMenuItem("Softver");
 				izmena.add(edit_zap);
+				
 				edit_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Izmena Zaposleni",label);
+						tabbedPane.addTab("Izmena Zaposleni",panel2);
+						// dropdown list : https://youtu.be/vd-k2oBMXUI
+						panel2.removeAll();
+						panel2.setLayout(new GridLayout(25,25));
+						String[] box_data=new String[zaposleni.size()];
+						int i=0;
+						for(Zaposleni z:zaposleni) {
+							box_data[i]=z.ime+" "+z.prezime;
+							i++;
+							}
+						JList box=new JList(box_data);
+						box.setVisibleRowCount(5);
+						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						box.addListSelectionListener(
+								new ListSelectionListener() {
+									int p=0;
+									@Override
+									public void valueChanged(ListSelectionEvent e) {
+										
+										p=box.getSelectedIndex();
+										System.out.println(p);
+										ispisiIzmenuZaposlenog(panel2, sirina, visina, panel_zap,p);
+									}
+								}
+						);
+						
+						
+						panel2.add(new JScrollPane(box));
 					}
 				});
+				
 				izmena.add(edit_soft);
 				edit_soft.addActionListener(new ActionListener() {
 
@@ -478,6 +513,199 @@ public class prozor{
 								polje_005.setText(null);
 								polje_006.setText(null);
 								polje_007.setText(null);
+								ispisiZaposlene(panel_zap,zaposleni);
+								proveri.dispose();
+								
+							}
+						});
+						
+						
+						JButton ne=new JButton("NE");
+						proveri.add(ne);
+						
+						ne.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								proveri.dispose();
+							}
+						});
+						
+						proveri.setVisible(true);
+						proveri.setLocation(sirina/5*2, visina/5*2);
+					}
+				}
+			});
+			panel.add(pokupi_zap);
+		}
+		
+		
+			static void ispisiIzmenuZaposlenog(JPanel panel,int sirina,int visina,JPanel panel_zap, int index) {
+			
+			panel.removeAll();
+			panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
+			panel.setLayout(new GridLayout(25,25));
+			
+			Zaposleni radnik2=new Zaposleni();
+			int k=0;
+			for(Zaposleni z:zaposleni)
+			{
+				if(index==k)
+					radnik2=z;
+				k++;
+			}
+			
+			JLabel promenljiv=new JLabel("Izmeni Zaposlenog",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			promenljiv=new JLabel("Ime : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_001=new JTextField();
+			polje_001.setHorizontalAlignment(JTextField.CENTER);
+			polje_001.setText(radnik2.ime);
+			polje_001.setBorder(null);
+			panel.add(polje_001);
+			
+			promenljiv=new JLabel("Prezime : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_002=new JTextField();
+			polje_002.setHorizontalAlignment(JTextField.CENTER);
+			polje_002.setText(radnik2.prezime);
+			polje_002.setBorder(null);
+			panel.add(polje_002);
+			
+			promenljiv=new JLabel("JMBG : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_003=new JTextField();
+			polje_003.setHorizontalAlignment(JTextField.CENTER);
+			polje_003.setBorder(null);
+			polje_003.setText(radnik2.jmbg);
+			polje_003.addKeyListener(new KeyAdapter() {
+				public void keyTyped(KeyEvent e) {
+					if(polje_003.getText().length() >=13)
+						e.consume();
+					char key=e.getKeyChar();
+					if(!(key>='0' && key<='9'))
+						e.consume();
+				}
+			});
+			panel.add(polje_003);
+			
+			promenljiv=new JLabel("Datum Rodjenja : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_004=new JTextField();
+			polje_004.setHorizontalAlignment(JTextField.CENTER);
+			polje_004.setBorder(null);
+			polje_004.setText(radnik2.datum_rodjenja);
+			polje_004.addKeyListener(new KeyAdapter() {
+				public void keyTyped(KeyEvent e) {
+					if(polje_004.getText().length() >=10)
+						e.consume();
+					char key=e.getKeyChar();
+					if(!(key>='0' && key<='9'))
+						e.consume();
+					String slash=polje_004.getText();
+					if(polje_004.getText().length()==2||polje_004.getText().length()==5)
+						polje_004.setText(slash+".");
+				}
+			});
+			panel.add(polje_004);
+			
+			promenljiv=new JLabel("Email : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_005=new JTextField();
+			polje_005.setHorizontalAlignment(JTextField.CENTER);
+			polje_005.setBorder(null);
+			polje_005.setText(radnik2.email);
+			panel.add(polje_005);
+			
+			
+			promenljiv=new JLabel("Adresa Stanovanja : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_006=new JTextField();
+			polje_006.setHorizontalAlignment(JTextField.CENTER);
+			polje_006.setBorder(null);
+			polje_006.setText(radnik2.adresa);
+			panel.add(polje_006);
+			
+			promenljiv=new JLabel("Softveri : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_007=new JTextField();
+			polje_007.setHorizontalAlignment(JTextField.CENTER);
+			polje_007.setBorder(null);
+			polje_007.setText(radnik2.softver);
+			panel.add(polje_007);
+			
+			promenljiv=new JLabel("  ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JButton pokupi_zap=new JButton("Upisi Zaposlenog");
+			
+			pokupi_zap.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					
+					JFrame proveri=new JFrame();
+					proveri.setSize(400, 200);
+					proveri.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					proveri.setLayout(new GridLayout(0,1));
+					String[] labela= new String[7];
+					labela[0]=polje_001.getText();
+					labela[1]=polje_002.getText();
+					labela[2]=polje_003.getText();
+					labela[3]=polje_004.getText();
+					labela[4]=polje_005.getText();
+					labela[5]=polje_006.getText();
+					labela[6]=polje_007.getText();
+					int count=0;
+					for(int i=0;i<6;i++)
+						if(labela[i].isEmpty())
+							count++;
+					
+					if(count>0)
+					{
+						proveri.setTitle("Greska");
+						JLabel greska=new JLabel("Sva polja moraju biti popunjena",SwingConstants.CENTER);
+						proveri.add(greska);
+						
+						JButton kraj=new JButton("CLOSE");
+						proveri.add(kraj);
+						
+						
+						kraj.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								proveri.dispose();
+							}
+						});
+						
+						proveri.setVisible(true);
+						proveri.setLocation(sirina/5*2, visina/5*2);
+					}
+					else {
+						proveri.setTitle("Unos");
+						JLabel upseh=new JLabel("Da li ste sigurni da zelite da unesete Zaposlenog",SwingConstants.CENTER);
+						proveri.add(upseh);
+						
+						JButton da=new JButton("DA");
+						proveri.add(da);
+						
+						
+						da.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								Zaposleni radnik1=new Zaposleni();
+								radnik1.ime=labela[0];
+								radnik1.prezime=labela[1];
+								radnik1.jmbg=labela[2];
+								radnik1.datum_rodjenja=labela[3];
+								radnik1.email=labela[4];
+								radnik1.adresa=labela[5];
+								radnik1.softver=labela[6];
+								zaposleni.set(index, radnik1);
+									System.out.println(zaposleni);
 								ispisiZaposlene(panel_zap,zaposleni);
 								proveri.dispose();
 								
