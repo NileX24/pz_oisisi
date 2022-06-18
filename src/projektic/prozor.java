@@ -76,17 +76,15 @@ public class prozor{
 				ispisiSoftver(panel_soft,softver);
 				
 				// preuzeto sa https://docs.oracle.com/javase/8/docs/api/javax/swing/JTabbedPane.html#getSelectedIndex--
+				
 				tabbedPane.addChangeListener(new ChangeListener() {
 					public void stateChanged(ChangeEvent e) {
 						int k=tabbedPane.getSelectedIndex();
 						if(k==0||k==1)
 							tabPressed = k;
-						System.out.println(tabPressed);
 			        }
 					
 				});
-				
-				
 				
 				
 				JToolBar tb=new JToolBar();
@@ -95,10 +93,17 @@ public class prozor{
 				JLabel label=new JLabel("Placeholder");
 				JPanel panel=new JPanel();
 				JPanel panel2=new JPanel();
+				JPanel panel3=new JPanel();
 				
 				JMenuBar menubar= new JMenuBar();
 				window.setJMenuBar(menubar);
-				//file bar
+
+
+				/*
+  				 -------------------------------------------------
+  				 FILE MENU
+  				 -------------------------------------------------
+  				 */
 				
 				JMenu file=new JMenu("File");
 				menubar.add(file);
@@ -153,13 +158,24 @@ public class prozor{
 				file.add(exit);
 				exit.addActionListener(new zatvori());
 				//edit
-				
+				/*
+  				 -------------------------------------------------
+  				 EDIT MENU
+  				 -------------------------------------------------
+  				 */
 				JMenu edit=new JMenu("Edit");
 				menubar.add(edit);
 				JMenu izmena=new JMenu("Edit");
 				JMenuItem edit_zap=new JMenuItem("Zaposleni");
 				JMenuItem edit_soft=new JMenuItem("Softver");
 				izmena.add(edit_zap);
+				
+				/*
+ 				 -------------------------------------------------
+ 				 EDIT -> ZAPOSLENI
+ 				 -------------------------------------------------
+ 				 */
+				
 				
 				edit_zap.addActionListener(new ActionListener() {
 
@@ -179,13 +195,13 @@ public class prozor{
 						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 						box.addListSelectionListener(
 								new ListSelectionListener() {
-									int p=0;
+									
 									@Override
 									public void valueChanged(ListSelectionEvent e) {
-										
+										int p=0;
 										p=box.getSelectedIndex();
 										System.out.println(p);
-										ispisiIzmenuZaposlenog(panel2, sirina, visina, panel_zap,p);
+										ispisiIzmenuZaposlenog(panel2, sirina, visina, panel_zap,p,true);
 									}
 								}
 						);
@@ -195,14 +211,55 @@ public class prozor{
 					}
 				});
 				
+				/*
+				 -------------------------------------------------
+				 EDIT -> SOFTVER
+				 -------------------------------------------------
+				 */
+				
 				izmena.add(edit_soft);
 				edit_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Izmena Softvera",label);
+						tabbedPane.addTab("Izmena Softvera",panel3);
+						
+						panel3.removeAll();
+						panel3.setLayout(new GridLayout(25,25));
+						String[] box_data=new String[softver.size()];
+						int i=0;
+						for(Softver s:softver) {
+							box_data[i]=s.naziv+" "+s.cetkica;
+							i++;
+							}
+						JList box=new JList(box_data);
+						box.setVisibleRowCount(5);
+						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						box.addListSelectionListener(
+								new ListSelectionListener() {
+									
+									@Override
+									public void valueChanged(ListSelectionEvent e) {
+										int p=0;
+										p=box.getSelectedIndex();
+										System.out.println(p);
+										ispisiIzmenuSoftvera(panel3, sirina, visina, panel_soft,p,true);
+									}
+								}
+						);
+						
+						
+						panel3.add(new JScrollPane(box));
+						
 					}
 				});
 				edit.add(izmena);
+				
+				/*
+  				 -------------------------------------------------
+  				 HELP MENU
+  				 -------------------------------------------------
+  				 */
+				
 				JMenu delete=new JMenu("Delete");
 				JMenuItem del_zap=new JMenuItem("Zaposleni");
 				JMenuItem del_soft=new JMenuItem("Softver");
@@ -222,6 +279,12 @@ public class prozor{
 				});
 				edit.add(delete);
 				
+				/*
+  				 -------------------------------------------------
+  				 HELP MENU
+  				 -------------------------------------------------
+  				 */
+				
 				JMenu help=new JMenu("Help");
 				menubar.add(help);
 				JMenuItem about=new JMenuItem("About");
@@ -232,6 +295,12 @@ public class prozor{
                         tabbedPane.addTab("O nama",label);
                     }
                 });
+				
+				/*
+  				 -------------------------------------------------
+  				 ISCRTAVANJE SLIKA NA DUGME
+  				 -------------------------------------------------
+  				 */
 				
 				ImageIcon icon_plus = new ImageIcon(getClass().getResource("add.png"));
 				ImageIcon icon_edit = new ImageIcon(getClass().getResource("edit.png"));
@@ -247,6 +316,12 @@ public class prozor{
 				tb.add(btn_del);
 				window.add(tb,BorderLayout.NORTH);
 				
+				/*
+				 -------------------------------------------------
+				 PLUS DUGME
+				 -------------------------------------------------
+				 */
+				
 				btn_plus.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
@@ -260,10 +335,24 @@ public class prozor{
         				plus.setResizable(false);
         				plus.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     					//plus.setLayout(new GridLayout(0,1));
+        				
+	        				/*
+	       				 -------------------------------------------------
+	       				 PLUS DUGME AKO JE IZABRAN TAB ZAPOSLENI
+	       				 -------------------------------------------------
+	       				 */
+        				
                     	if(tabPressed==0) {
                     		plus.setTitle("Unesi novog zaposlenog");
                     		ispisiUnosZaposlenog(panel, sirina, visina, panel_zap);
                     	}
+                    	
+                    	/*
+	       				 -------------------------------------------------
+	       				 PLUS DUGME AKO JE IZABRAN TAB SOFTVER
+	       				 -------------------------------------------------
+	       				 */
+                    	
                     	else {
                     		plus.setTitle("Unesi novi softver");
                     		ispisiUnosSoftvera(panel, sirina, visina, panel_soft);
@@ -272,12 +361,113 @@ public class prozor{
                     	plus.setVisible(true);
                     }
                 });
+				
+				/*
+				 -------------------------------------------------
+				 OLOVKA DUGME
+				 -------------------------------------------------
+				 */
+				
 				btn_edit.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
-                    	//kod
+                    	
+                    	JFrame menjaj=new JFrame();
+                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				menjaj.setLocation(sirina/3, visina/8);
+        				menjaj.setSize(new Dimension(sirina/3,visina/4*3));
+        				menjaj.setResizable(false);
+        				menjaj.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        				
+	        				/*
+	       				 -------------------------------------------------
+	       				 AKO JE IZABRAN ZAPOSLENI TAB EDIT ZA ZAPOSLENE
+	       				 -------------------------------------------------
+	       				 */
+        				
+                    	if(tabPressed==0) {
+                    		menjaj.setTitle("Izmeni Zaposlenog");
+                    		JPanel panel4=new JPanel();
+                    		panel4.removeAll();
+    						panel4.setLayout(new GridLayout(25,25));
+    						String[] box_data=new String[zaposleni.size()];
+    						int i=0;
+    						for(Zaposleni z:zaposleni) {
+    							box_data[i]=z.ime+" "+z.prezime;
+    							i++;
+    							}
+    						JList box=new JList(box_data);
+    						box.setVisibleRowCount(5);
+    						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    						box.addListSelectionListener(
+    								new ListSelectionListener() {
+    									
+    									@Override
+    									public void valueChanged(ListSelectionEvent e) {
+    										int p=0;
+    										p=box.getSelectedIndex();
+    										System.out.println(p);
+    										ispisiIzmenuZaposlenog(panel4, sirina, visina, panel_zap,p,true);
+    									}
+    								}
+    						);
+    						
+    						
+    						panel4.add(new JScrollPane(box));
+    						menjaj.add(panel4);
+                    	}
+                    	
+                    	/*
+	       				 -------------------------------------------------
+	       				 AKO JE IZABRAN SOFTVER TAB EDIT ZA SOFTVERE
+	       				 -------------------------------------------------
+	       				 */
+                    	
+                    	else {
+                    		menjaj.setTitle("Izmeni Softver");
+                    		JPanel panel5=new JPanel();
+                    		panel5.removeAll();
+    						panel5.setLayout(new GridLayout(25,25));
+    						String[] box_data=new String[softver.size()];
+    						int i=0;
+    						for(Softver s:softver) {
+    							box_data[i]=s.naziv+" "+s.cetkica;
+    							i++;
+    							}
+    						JList box2=new JList(box_data);
+    						box2.setVisibleRowCount(5);
+    						box2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    						box2.addListSelectionListener(
+    								new ListSelectionListener() {
+    									
+    									@Override
+    									public void valueChanged(ListSelectionEvent e) {
+    										int q=0;
+    										q=box2.getSelectedIndex();
+    										System.out.println(q);
+    										ispisiIzmenuSoftvera(panel5, sirina, visina, panel_soft,q,true);
+    									}
+    								}
+    						);
+    						
+    						
+    						panel5.add(new JScrollPane(box2));
+    						menjaj.add(panel5);
+                    	}
+                    	menjaj.setVisible(true);
+                    	
                     }
                 });
+				
+				/*
+				 -------------------------------------------------
+				 KANTA DUGME
+				 -------------------------------------------------
+				 */
+				
 				btn_del.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
@@ -285,6 +475,13 @@ public class prozor{
                     }
                 }); 
 				//preuzeto sa stackoverflow-a
+				
+				/*
+  				 -------------------------------------------------
+  				 DATUM DOLE DESNO 
+  				 -------------------------------------------------
+  				 */
+				
 				SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy"); 
 				Date date=new Date();
 				JLabel status=new JLabel(formatter.format(date),SwingConstants.RIGHT);
@@ -538,9 +735,9 @@ public class prozor{
 		}
 		
 		
-			static void ispisiIzmenuZaposlenog(JPanel panel,int sirina,int visina,JPanel panel_zap, int index) {
-			
-			panel.removeAll();
+		static void ispisiIzmenuZaposlenog(JPanel panel,int sirina,int visina,JPanel panel_zap, int index, boolean istina) {
+			if(istina)
+				panel.removeAll();
 			panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
 			panel.setLayout(new GridLayout(25,25));
 			
@@ -877,5 +1074,164 @@ public class prozor{
 			});
 			panel.add(pokupi_soft);
 		}
+		
+		static void ispisiIzmenuSoftvera(JPanel panel,int sirina,int visina,JPanel panel_soft,int index, boolean istina) {
+			
+			if(istina)
+				panel.removeAll();
+			
+			panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
+			panel.setLayout(new GridLayout(25,25));
+			
+			Softver program2=new Softver();
+			int k=0;
+			for(Softver s:softver)
+			{
+				if(index==k)
+					program2=s;
+				k++;
+			}
+			
+			JLabel promenljiv=new JLabel("Unesi Softvere",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			promenljiv=new JLabel("Naziv : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_001=new JTextField();
+			polje_001.setHorizontalAlignment(JTextField.CENTER);
+			polje_001.setBorder(null);
+			polje_001.setText(program2.naziv);
+			panel.add(polje_001);
+			
+			promenljiv=new JLabel("Cetkice : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_002=new JTextField();
+			polje_002.setHorizontalAlignment(JTextField.CENTER);
+			polje_002.setBorder(null);
+			polje_002.setText(program2.cetkica);
+			panel.add(polje_002);
+			
+			promenljiv=new JLabel("Boja : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_003=new JTextField();
+			polje_003.setHorizontalAlignment(JTextField.CENTER);
+			polje_003.setBorder(null);
+			
+			panel.add(polje_003);
+			
+			promenljiv=new JLabel("Format Fajla : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_004=new JTextField();
+			polje_004.setHorizontalAlignment(JTextField.CENTER);
+			polje_004.setBorder(null);
+			polje_004.setText(program2.format);
+			panel.add(polje_004);
+			
+			promenljiv=new JLabel("Alati za animiranje : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_005=new JTextField();
+			polje_005.setHorizontalAlignment(JTextField.CENTER);
+			polje_005.setBorder(null);
+			polje_005.setText(program2.alat);
+			panel.add(polje_005);
+			
+			promenljiv=new JLabel("Render : ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JTextField polje_006=new JTextField();
+			polje_006.setHorizontalAlignment(JTextField.CENTER);
+			polje_006.setBorder(null);
+			polje_006.setText(program2.render);
+			panel.add(polje_006);
+			
+			promenljiv=new JLabel("  ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			
+			JButton pokupi_soft=new JButton("Upisi Softver");
+			
+			pokupi_soft.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					
+					JFrame proveri=new JFrame();
+					proveri.setSize(400, 200);
+					proveri.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					proveri.setLayout(new GridLayout(0,1));
+					String[] labela= new String[6];
+					labela[0]=polje_001.getText();
+					labela[1]=polje_002.getText();
+					labela[2]=polje_003.getText();
+					labela[3]=polje_004.getText();
+					labela[4]=polje_005.getText();
+					labela[5]=polje_006.getText();
+					int count=0;
+					for(int i=0;i<6;i++)
+						if(labela[i].isEmpty())
+							count++;
+					
+					if(count>0)
+					{
+						proveri.setTitle("Greska");
+						JLabel greska=new JLabel("Sva polja moraju biti popunjena",SwingConstants.CENTER);
+						proveri.add(greska);
+						
+						JButton kraj=new JButton("CLOSE");
+						proveri.add(kraj);
+						
+						
+						kraj.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								proveri.dispose();
+							}
+						});
+						
+						proveri.setVisible(true);
+						proveri.setLocation(sirina/5*2, visina/5*2);
+					}
+					else {
+						proveri.setTitle("Unos");
+						JLabel upseh=new JLabel("Da li ste sigurni da zelite da unesete Zaposlenog",SwingConstants.CENTER);
+						proveri.add(upseh);
+						
+						JButton da=new JButton("DA");
+						proveri.add(da);
+						
+						
+						da.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								Softver softveri1=new Softver();
+								softveri1.naziv=labela[0];
+								softveri1.cetkica=labela[1];
+								softveri1.format=labela[3];
+								softveri1.alat=labela[4];
+								softveri1.render=labela[5];
+								softver.set(index,softveri1);
+								ispisiSoftver(panel_soft,softver);
+								proveri.dispose();
+							}
+						});
+						
+						
+						JButton ne=new JButton("NE");
+						proveri.add(ne);
+						
+						ne.addActionListener(new ActionListener(){
+							public void actionPerformed(ActionEvent e) {
+								proveri.dispose();
+							}
+						});
+						
+						proveri.setVisible(true);
+						proveri.setLocation(sirina/5*2, visina/5*2);
+					}
+				}
+			});
+			panel.add(pokupi_soft);
+		}
+		
 }
 
