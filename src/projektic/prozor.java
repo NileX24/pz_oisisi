@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
-import java.awt.Image;
 import java.util.*;
 import java.util.List;
 import javax.swing.event.ChangeEvent;
@@ -111,6 +110,13 @@ public class prozor{
 				JMenuItem pro_zap=new JMenuItem("Zaposleni");
 				JMenuItem pro_soft=new JMenuItem("Softver");
 				novi.add(pro_zap);
+				
+				/*
+ 				 -------------------------------------------------
+ 				 FILE MENU -> NEW -> ZAPOSLENI
+ 				 -------------------------------------------------
+ 				 */
+				
 				pro_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
@@ -120,6 +126,13 @@ public class prozor{
 						ispisiUnosZaposlenog(panel, sirina, visina,panel_zap);
 					}
 				});
+				
+				/*
+				 -------------------------------------------------
+				 FILE MENU -> NEW -> SOFTVER
+				 -------------------------------------------------
+				 */
+				
 				novi.add(pro_soft);
 				pro_soft.addActionListener(new ActionListener() {
 
@@ -130,10 +143,24 @@ public class prozor{
 					}
 				});
 				file.add(novi);
+				
+				/*
+				 -------------------------------------------------
+				 FILE MENU -> OPEN
+				 -------------------------------------------------
+				 */
+				
 				JMenu open=new JMenu("Open");
 				JMenuItem tab_zap=new JMenuItem("Zaposleni");
 				JMenuItem tab_soft=new JMenuItem("Softver");
 				open.add(tab_zap);
+				
+				/*
+				 -------------------------------------------------
+				 FILE MENU -> OPEN -> ZAPOSLENI
+				 -------------------------------------------------
+				 */
+				
 				tab_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
@@ -144,6 +171,13 @@ public class prozor{
 					}
 				});
 				open.add(tab_soft);
+				
+				/*
+				 -------------------------------------------------
+				 FILE MENU -> OPEN -> SOFTVER
+				 -------------------------------------------------
+				 */
+				
 				tab_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
@@ -172,7 +206,7 @@ public class prozor{
 				
 				/*
  				 -------------------------------------------------
- 				 EDIT -> ZAPOSLENI
+ 				 EDIT MENU -> ZAPOSLENI
  				 -------------------------------------------------
  				 */
 				
@@ -213,7 +247,7 @@ public class prozor{
 				
 				/*
 				 -------------------------------------------------
-				 EDIT -> SOFTVER
+				 EDIT MENU -> SOFTVER
 				 -------------------------------------------------
 				 */
 				
@@ -371,7 +405,26 @@ public class prozor{
 				about.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
-                        tabbedPane.addTab("O nama",label);
+                    	JLabel onama=new JLabel("",SwingConstants.CENTER);
+                        tabbedPane.addTab("O nama",panel);
+                        panel.setLayout(new GridLayout(4,4));
+                        onama=new JLabel("Veljko Radovic",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("AI/32/2019",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("Branko Petrovic",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("AI/34/2019",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("Vuk Babic",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("AI/36/2019",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("Marina Pancic",SwingConstants.CENTER);
+                        panel.add(onama);
+                        onama=new JLabel("AI/52/2019",SwingConstants.CENTER);
+                        panel.add(onama);
+                        panel.setVisible(true);
                     }
                 });
 				
@@ -550,7 +603,100 @@ public class prozor{
 				btn_del.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
-                    	//kod
+                    	JFrame brisi=new JFrame();
+                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				brisi.setLocation(sirina/3, visina/8);
+        				brisi.setSize(new Dimension(sirina/3,visina/4*3));
+        				brisi.setResizable(false);
+        				brisi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        				
+        				/*
+	       				 -------------------------------------------------
+	       				 AKO JE IZABRAN ZAPOSLENI TAB DELETE ZA ZAPOSLENE
+	       				 -------------------------------------------------
+	       				 */
+        				
+        				if(tabPressed==0) {
+                    		brisi.setTitle("Obrisi Zaposlenog");
+                    		panel2.removeAll();
+    						String[] box_data=new String[zaposleni.size()];
+    						int i=0;
+    						for(Zaposleni z:zaposleni) {
+    							box_data[i]=z.ime+" "+z.prezime;
+    							i++;
+    							}
+    						JList box=new JList(box_data);
+    						box.setVisibleRowCount(5);
+    						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    						box.addListSelectionListener(
+    								new ListSelectionListener() {
+    									
+    									@Override
+    									public void valueChanged(ListSelectionEvent e) {
+    										int p=0;
+    										p=box.getSelectedIndex();
+    										System.out.println(p);
+    										String q= zaposleni.get(p).ime + " " + zaposleni.get(p).ime;
+    										int answ=JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete "+q,"Brisanje Zaposlenog",JOptionPane.YES_NO_OPTION);
+    										if (answ==0) {
+    											zaposleni.remove(p);
+    											ispisiZaposlene(panel_zap, zaposleni);
+    											brisi.dispose();
+    											}
+    									}
+    								}
+    						);
+    						
+    						panel2.add(new JScrollPane(box));
+    						brisi.add(panel2);
+        				}
+        				
+        				/*
+	       				 -------------------------------------------------
+	       				 AKO JE IZABRAN SOFTVER TAB DELETE ZA SOFTVERE
+	       				 -------------------------------------------------
+	       				 */
+        				
+        				else {
+        					brisi.setTitle("Obrisi Softver");
+        					panel3.removeAll();
+    						String[] box_data=new String[softver.size()];
+    						int i=0;
+    						for(Softver s:softver) {
+    							box_data[i]=s.naziv+" "+s.cetkica;
+    							i++;
+    							}
+    						JList box=new JList(box_data);
+    						box.setVisibleRowCount(5);
+    						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    						box.addListSelectionListener(
+    								new ListSelectionListener() {
+    									
+    									@Override
+    									public void valueChanged(ListSelectionEvent e) {
+    										int p=0;
+    										p=box.getSelectedIndex();
+    										System.out.println(p);
+    										String q= softver.get(p).naziv + " " + softver.get(p).cetkica;
+    										int answ=JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete "+q,"Brisanje Softvera",JOptionPane.YES_NO_OPTION);
+    										if (answ==0) {
+    													softver.remove(p);
+    													ispisiSoftver(panel_soft, softver);
+    													brisi.dispose();
+    										}
+    									}
+    									
+    								}
+    								
+    						);
+    						
+    						panel3.add(new JScrollPane(box));
+        					brisi.add(panel3);
+        				}
+        				brisi.setVisible(true);
                     }
                 }); 
 				//preuzeto sa stackoverflow-a
