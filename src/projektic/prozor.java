@@ -256,7 +256,7 @@ public class prozor{
 				
 				/*
   				 -------------------------------------------------
-  				 HELP MENU
+  				 DELETE MENU
   				 -------------------------------------------------
   				 */
 				
@@ -266,15 +266,94 @@ public class prozor{
 				delete.add(del_zap);
 				del_zap.addActionListener(new ActionListener() {
 
+					/*
+	  				 -------------------------------------------------
+	  				 DELETE MENU -> ZAPOSLENI
+	  				 -------------------------------------------------
+	  				 */
+					
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Obrisi Zaposleni",label);
+						tabbedPane.addTab("Obrisi Zaposleni",panel2);
+						panel2.removeAll();
+						String[] box_data=new String[zaposleni.size()];
+						int i=0;
+						for(Zaposleni z:zaposleni) {
+							box_data[i]=z.ime+" "+z.prezime;
+							i++;
+							}
+						JList box=new JList(box_data);
+						box.setVisibleRowCount(5);
+						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						box.addListSelectionListener(
+								new ListSelectionListener() {
+									
+									@Override
+									public void valueChanged(ListSelectionEvent e) {
+										int p=0;
+										p=box.getSelectedIndex();
+										System.out.println(p);
+										String q= zaposleni.get(p).ime + " " + zaposleni.get(p).ime;
+										int answ=JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete "+q,"Brisanje Zaposlenog",JOptionPane.YES_NO_OPTION);
+										if (answ==0) {
+											zaposleni.remove(p);
+											ispisiZaposlene(panel_zap, zaposleni);
+											int x=tabbedPane.getSelectedIndex();
+											tabbedPane.remove(x);
+											}
+									}
+								}
+						);
+						
+						panel2.add(new JScrollPane(box));
 					}
 				});
 				delete.add(del_soft);
 				del_soft.addActionListener(new ActionListener() {
 
+					/*
+	  				 -------------------------------------------------
+	  				 DELETE MENU -> SOFTVER
+	  				 -------------------------------------------------
+	  				 */
+					
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Obrisi Softver",label);
+						tabbedPane.addTab("Obrisi Softver",panel3);
+						
+						panel3.removeAll();
+						String[] box_data=new String[softver.size()];
+						int i=0;
+						for(Softver s:softver) {
+							box_data[i]=s.naziv+" "+s.cetkica;
+							i++;
+							}
+						JList box=new JList(box_data);
+						box.setVisibleRowCount(5);
+						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						box.addListSelectionListener(
+								new ListSelectionListener() {
+									
+									@Override
+									public void valueChanged(ListSelectionEvent e) {
+										int p=0;
+										p=box.getSelectedIndex();
+										System.out.println(p);
+										String q= softver.get(p).naziv + " " + softver.get(p).cetkica;
+										int answ=JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete "+q,"Brisanje Softvera",JOptionPane.YES_NO_OPTION);
+										if (answ==0) {
+													softver.remove(p);
+													ispisiSoftver(panel_soft, softver);
+													int x=tabbedPane.getSelectedIndex();
+													tabbedPane.remove(x);
+										}
+									}
+									
+								}
+								
+						);
+						
+						
+						panel3.add(new JScrollPane(box));
+						
 					}
 				});
 				edit.add(delete);
