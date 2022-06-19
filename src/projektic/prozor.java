@@ -120,10 +120,18 @@ public class prozor{
 				pro_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						
-						tabbedPane.addTab("Dodaj Zaposlene",panel);
-						panel.removeAll();
-						ispisiUnosZaposlenog(panel, sirina, visina,panel_zap);
+
+        				final JDialog proba=new JDialog(window,"Unesi Zaposlenog",true);
+        				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				proba.setSize(screenSize);
+        				proba.setLocation(sirina/3, visina/8);
+        				proba.setResizable(false);
+						proba.getContentPane().add(panel);
+						ispisiUnosZaposlenog(panel, sirina, visina,panel_zap,proba);
+						proba.setVisible(true);
 					}
 				});
 				
@@ -137,9 +145,17 @@ public class prozor{
 				pro_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Dodaj Softver",panel);
-						panel.removeAll();
-						ispisiUnosSoftvera(panel, sirina, visina, panel_soft);
+						final JDialog proba=new JDialog(window,"Unesi Softver",true);
+        				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				proba.setSize(screenSize);
+        				proba.setLocation(sirina/3, visina/8);
+        				proba.setResizable(false);
+						proba.getContentPane().add(panel);
+						ispisiUnosSoftvera(panel, sirina, visina, panel_soft,proba);
+						proba.setVisible(true);
 					}
 				});
 				file.add(novi);
@@ -214,10 +230,22 @@ public class prozor{
 				edit_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Izmena Zaposleni",panel2);
-						// dropdown list : https://youtu.be/vd-k2oBMXUI
-						panel2.removeAll();
-						panel2.setLayout(new GridLayout(25,25));
+						
+						JFrame menjaj=new JFrame();
+                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				menjaj.setLocation(sirina/3, visina/8);
+        				menjaj.setSize(new Dimension(sirina/3,visina/4*3));
+        				menjaj.setResizable(false);
+        				menjaj.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        				menjaj.setVisible(true);
+						
+        				menjaj.setTitle("Izmeni Zaposlenog");
+                		JPanel panel4=new JPanel();
+                		panel4.removeAll();
+						panel4.setLayout(new GridLayout(25,25));
 						String[] box_data=new String[zaposleni.size()];
 						int i=0;
 						for(Zaposleni z:zaposleni) {
@@ -235,13 +263,14 @@ public class prozor{
 										int p=0;
 										p=box.getSelectedIndex();
 										System.out.println(p);
-										ispisiIzmenuZaposlenog(panel2, sirina, visina, panel_zap,p,true);
+										ispisiIzmenuZaposlenog(panel4, sirina, visina, panel_zap,p,true);
 									}
 								}
 						);
 						
 						
-						panel2.add(new JScrollPane(box));
+						panel4.add(new JScrollPane(box));
+						menjaj.add(panel4);
 					}
 				});
 				
@@ -255,34 +284,47 @@ public class prozor{
 				edit_soft.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Izmena Softvera",panel3);
 						
-						panel3.removeAll();
-						panel3.setLayout(new GridLayout(25,25));
+						JFrame menjaj=new JFrame();
+                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				menjaj.setLocation(sirina/3, visina/8);
+        				menjaj.setSize(new Dimension(sirina/3,visina/4*3));
+        				menjaj.setResizable(false);
+        				menjaj.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        				menjaj.setVisible(true);
+						
+        				menjaj.setTitle("Izmeni Softver");
+                		JPanel panel5=new JPanel();
+                		panel5.removeAll();
+						panel5.setLayout(new GridLayout(25,25));
 						String[] box_data=new String[softver.size()];
 						int i=0;
 						for(Softver s:softver) {
 							box_data[i]=s.naziv+" "+s.cetkica;
 							i++;
 							}
-						JList box=new JList(box_data);
-						box.setVisibleRowCount(5);
-						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-						box.addListSelectionListener(
+						JList box2=new JList(box_data);
+						box2.setVisibleRowCount(5);
+						box2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+						box2.addListSelectionListener(
 								new ListSelectionListener() {
 									
 									@Override
 									public void valueChanged(ListSelectionEvent e) {
-										int p=0;
-										p=box.getSelectedIndex();
-										System.out.println(p);
-										ispisiIzmenuSoftvera(panel3, sirina, visina, panel_soft,p,true);
+										int q=0;
+										q=box2.getSelectedIndex();
+										System.out.println(q);
+										ispisiIzmenuSoftvera(panel5, sirina, visina, panel_soft,q,true);
 									}
 								}
 						);
 						
 						
-						panel3.add(new JScrollPane(box));
+						panel5.add(new JScrollPane(box2));
+						menjaj.add(panel5);
 						
 					}
 				});
@@ -307,8 +349,19 @@ public class prozor{
 	  				 */
 					
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Obrisi Zaposleni",panel2);
-						panel2.removeAll();
+						
+						JFrame brisi=new JFrame();
+                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				brisi.setLocation(sirina/3, visina/8);
+        				brisi.setSize(new Dimension(sirina/3,visina/4*3));
+        				brisi.setResizable(false);
+        				brisi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						brisi.setTitle("Obrisi Zaposlenog");
+						
+                		panel2.removeAll();
 						String[] box_data=new String[zaposleni.size()];
 						int i=0;
 						for(Zaposleni z:zaposleni) {
@@ -326,19 +379,20 @@ public class prozor{
 										int p=0;
 										p=box.getSelectedIndex();
 										System.out.println(p);
-										String q= zaposleni.get(p).ime + " " + zaposleni.get(p).ime;
+										String q= zaposleni.get(p).ime + " " + zaposleni.get(p).prezime;
 										int answ=JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete "+q,"Brisanje Zaposlenog",JOptionPane.YES_NO_OPTION);
 										if (answ==0) {
 											zaposleni.remove(p);
 											ispisiZaposlene(panel_zap, zaposleni);
-											int x=tabbedPane.getSelectedIndex();
-											tabbedPane.remove(x);
+											brisi.dispose();
 											}
 									}
 								}
 						);
 						
 						panel2.add(new JScrollPane(box));
+						brisi.add(panel2);
+						brisi.setVisible(true);
 					}
 				});
 				delete.add(del_soft);
@@ -351,9 +405,18 @@ public class prozor{
 	  				 */
 					
 					public void actionPerformed(ActionEvent e) {
-						tabbedPane.addTab("Obrisi Softver",panel3);
-						
-						panel3.removeAll();
+						JFrame brisi=new JFrame();
+                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+        				int sirina=(int) screenSize.getWidth();
+        				int visina=(int )screenSize.getHeight();
+        				screenSize= new Dimension(sirina/3,visina/4*3);
+        				brisi.setLocation(sirina/3, visina/8);
+        				brisi.setSize(new Dimension(sirina/3,visina/4*3));
+        				brisi.setResizable(false);
+        				brisi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        				
+						brisi.setTitle("Obrisi Softver");
+    					panel3.removeAll();
 						String[] box_data=new String[softver.size()];
 						int i=0;
 						for(Softver s:softver) {
@@ -376,8 +439,7 @@ public class prozor{
 										if (answ==0) {
 													softver.remove(p);
 													ispisiSoftver(panel_soft, softver);
-													int x=tabbedPane.getSelectedIndex();
-													tabbedPane.remove(x);
+													brisi.dispose();
 										}
 									}
 									
@@ -385,8 +447,9 @@ public class prozor{
 								
 						);
 						
-						
 						panel3.add(new JScrollPane(box));
+    					brisi.add(panel3);
+    					brisi.setVisible(true);
 						
 					}
 				});
@@ -407,6 +470,7 @@ public class prozor{
                     public void actionPerformed(ActionEvent e) {
                     	JLabel onama=new JLabel("",SwingConstants.CENTER);
                         tabbedPane.addTab("O nama",panel);
+                        panel.removeAll();
                         panel.setLayout(new GridLayout(4,4));
                         onama=new JLabel("Veljko Radovic",SwingConstants.CENTER);
                         panel.add(onama);
@@ -457,16 +521,8 @@ public class prozor{
 				btn_plus.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
-                    	JFrame plus=new JFrame();
-                    	Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
-        				int sirina=(int) screenSize.getWidth();
-        				int visina=(int )screenSize.getHeight();
-        				screenSize= new Dimension(sirina/3,visina/4*3);
-        				plus.setLocation(sirina/3, visina/8);
-        				plus.setSize(new Dimension(sirina/3,visina/4*3));
-        				plus.setResizable(false);
-        				plus.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    					//plus.setLayout(new GridLayout(0,1));
+                    	
+                    	
         				
 	        				/*
 	       				 -------------------------------------------------
@@ -475,8 +531,18 @@ public class prozor{
 	       				 */
         				
                     	if(tabPressed==0) {
-                    		plus.setTitle("Unesi novog zaposlenog");
-                    		ispisiUnosZaposlenog(panel, sirina, visina, panel_zap);
+                    		final JDialog proba=new JDialog(window,"Unesi Zaposlenog",true);
+            				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+            				int sirina=(int) screenSize.getWidth();
+            				int visina=(int )screenSize.getHeight();
+            				screenSize= new Dimension(sirina/3,visina/4*3);
+            				proba.setSize(screenSize);
+            				proba.setLocation(sirina/3, visina/8);
+            				proba.setResizable(false);
+    						proba.getContentPane().add(panel);
+    						ispisiUnosZaposlenog(panel, sirina, visina,panel_zap,proba);
+    						proba.setVisible(true);
+    						proba.dispose();
                     	}
                     	
                     	/*
@@ -486,11 +552,19 @@ public class prozor{
 	       				 */
                     	
                     	else {
-                    		plus.setTitle("Unesi novi softver");
-                    		ispisiUnosSoftvera(panel, sirina, visina, panel_soft);
+                    		final JDialog proba=new JDialog(window,"Unesi Softver",true);
+            				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
+            				int sirina=(int) screenSize.getWidth();
+            				int visina=(int )screenSize.getHeight();
+            				screenSize= new Dimension(sirina/3,visina/4*3);
+            				proba.setSize(screenSize);
+            				proba.setLocation(sirina/3, visina/8);
+            				proba.setResizable(false);
+    						proba.getContentPane().add(panel);
+    						ispisiUnosSoftvera(panel, sirina, visina, panel_soft,proba);
+    						proba.setVisible(true);
                     	}
-                    	plus.add(panel);
-                    	plus.setVisible(true);
+                    	
                     }
                 });
 				
@@ -639,7 +713,7 @@ public class prozor{
     										int p=0;
     										p=box.getSelectedIndex();
     										System.out.println(p);
-    										String q= zaposleni.get(p).ime + " " + zaposleni.get(p).ime;
+    										String q= zaposleni.get(p).ime + " " + zaposleni.get(p).prezime;
     										int answ=JOptionPane.showConfirmDialog(null, "Da li zelite da obrisete "+q,"Brisanje Zaposlenog",JOptionPane.YES_NO_OPTION);
     										if (answ==0) {
     											zaposleni.remove(p);
@@ -776,7 +850,7 @@ public class prozor{
 		}
 		
 		
-		static void ispisiUnosZaposlenog(JPanel panel,int sirina,int visina,JPanel panel_zap) {
+		static void ispisiUnosZaposlenog(JPanel panel,int sirina,int visina,JPanel panel_zap,JDialog dijalog) {
 			
 			panel.removeAll();
 			panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
@@ -903,21 +977,14 @@ public class prozor{
 								proveri.dispose();
 							}
 						});
-						
+						dijalog.dispose();
 						proveri.setVisible(true);
 						proveri.setLocation(sirina/5*2, visina/5*2);
 					}
 					else {
 						proveri.setTitle("Unos");
-						JLabel upseh=new JLabel("Da li ste sigurni da zelite da unesete Zaposlenog",SwingConstants.CENTER);
+						JLabel upseh=new JLabel("Novi zaposleni unet",SwingConstants.CENTER);
 						proveri.add(upseh);
-						
-						JButton da=new JButton("DA");
-						proveri.add(da);
-						
-						
-						da.addActionListener(new ActionListener(){
-							public void actionPerformed(ActionEvent e) {
 								Zaposleni radnik1=new Zaposleni();
 								radnik1.ime=labela[0];
 								radnik1.prezime=labela[1];
@@ -936,20 +1003,16 @@ public class prozor{
 								polje_006.setText(null);
 								polje_007.setText(null);
 								ispisiZaposlene(panel_zap,zaposleni);
-								proveri.dispose();
 								
-							}
-						});
-						
-						
-						JButton ne=new JButton("NE");
-						proveri.add(ne);
-						
-						ne.addActionListener(new ActionListener(){
-							public void actionPerformed(ActionEvent e) {
-								proveri.dispose();
-							}
-						});
+								JButton kraj=new JButton("CLOSE");
+								proveri.add(kraj);
+								
+								dijalog.dispose();
+								kraj.addActionListener(new ActionListener(){
+									public void actionPerformed(ActionEvent e) {
+										proveri.dispose();
+									}
+								});
 						
 						proveri.setVisible(true);
 						proveri.setLocation(sirina/5*2, visina/5*2);
@@ -957,6 +1020,15 @@ public class prozor{
 				}
 			});
 			panel.add(pokupi_zap);
+			promenljiv=new JLabel("  ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			JButton close=new JButton("zatvori tab");
+			close.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					dijalog.dispose();
+				}
+			});
+			panel.add(close);
 		}
 		
 		
@@ -1153,7 +1225,7 @@ public class prozor{
 		}
 		
 		
-		static void ispisiUnosSoftvera(JPanel panel,int sirina,int visina,JPanel panel_soft) {
+		static void ispisiUnosSoftvera(JPanel panel,int sirina,int visina,JPanel panel_soft,JDialog dijalog) {
 			panel.removeAll();
 			
 			panel.setBorder(BorderFactory.createEmptyBorder(0,200,0,200));
@@ -1249,21 +1321,15 @@ public class prozor{
 								proveri.dispose();
 							}
 						});
-						
+						dijalog.dispose();
 						proveri.setVisible(true);
 						proveri.setLocation(sirina/5*2, visina/5*2);
 					}
 					else {
 						proveri.setTitle("Unos");
-						JLabel upseh=new JLabel("Da li ste sigurni da zelite da unesete Zaposlenog",SwingConstants.CENTER);
+						JLabel upseh=new JLabel("Novi softver unet",SwingConstants.CENTER);
 						proveri.add(upseh);
 						
-						JButton da=new JButton("DA");
-						proveri.add(da);
-						
-						
-						da.addActionListener(new ActionListener(){
-							public void actionPerformed(ActionEvent e) {
 								Softver softveri1=new Softver();
 								softveri1.naziv=labela[0];
 								softveri1.cetkica=labela[1];
@@ -1279,18 +1345,16 @@ public class prozor{
 								polje_006.setText(null);
 								ispisiSoftver(panel_soft,softver);
 								proveri.dispose();
-							}
-						});
-						
-						
-						JButton ne=new JButton("NE");
-						proveri.add(ne);
-						
-						ne.addActionListener(new ActionListener(){
-							public void actionPerformed(ActionEvent e) {
-								proveri.dispose();
-							}
-						});
+								
+								JButton kraj=new JButton("CLOSE");
+								proveri.add(kraj);
+								
+								dijalog.dispose();
+								kraj.addActionListener(new ActionListener(){
+									public void actionPerformed(ActionEvent e) {
+										proveri.dispose();
+									}
+								});
 						
 						proveri.setVisible(true);
 						proveri.setLocation(sirina/5*2, visina/5*2);
@@ -1298,6 +1362,16 @@ public class prozor{
 				}
 			});
 			panel.add(pokupi_soft);
+			promenljiv=new JLabel("  ",SwingConstants.CENTER);
+			panel.add(promenljiv);
+			JButton close=new JButton("zatvori tab");
+			close.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					dijalog.dispose();
+				}
+			});
+			panel.add(close);
+			
 		}
 		
 		static void ispisiIzmenuSoftvera(JPanel panel,int sirina,int visina,JPanel panel_soft,int index, boolean istina) {
