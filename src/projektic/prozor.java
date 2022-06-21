@@ -14,6 +14,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class prozor{
+	
+		// u 99% slucaja za funkcionalnsot kod-a korisceni su videi sa playliste na yt-ubu: 
+		// https://www.youtube.com/playlist?list=PL_c9BZzLwBRKIMP_xNTJxi9lIgQhE51rF
+		
+		// dok za gui su korisceni razliciti videi uglavnom sa yt-a
 		static List<Zaposleni> zaposleni=new ArrayList<Zaposleni>();
 		Zaposleni radnik=new Zaposleni();
 		static List<Softver> softver=new ArrayList<Softver>();
@@ -26,10 +31,15 @@ public class prozor{
 		}
 		
 		public prozor(){
-				
+			
+				//kreiranje frame-a i panela https://youtu.be/5o3fMLPY7qY
+			
 				JFrame window=new JFrame();
 				window.setTitle("Pojekat");
+				
 				// skinuto sa stack overflow-a
+				// https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
+				
 				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
 				int sirina=(int) screenSize.getWidth();
 				int visina=(int )screenSize.getHeight();
@@ -39,6 +49,8 @@ public class prozor{
 				window.setMaximumSize(screenSize);
 				screenSize= new Dimension(sirina/3,visina/4*3);
 				window.setMinimumSize(screenSize);
+				
+				// Unos podataka poznat jos pre zbog rada u C-u i C#-u
 				
 				radnik.ime="Petar";
 				radnik.prezime="Petrovic";
@@ -56,9 +68,11 @@ public class prozor{
 				program.render="Vray";
 				softver.add(program);
 				
+				//kreiranje tabova https://youtu.be/RW5mTm7rhLY
 				
 				JTabbedPane tabbedPane = new JTabbedPane();
 				window.add(tabbedPane);
+				
 				tabbedPane.setFocusable(false);
 				
 				JPanel panel_zap=new JPanel();
@@ -120,7 +134,9 @@ public class prozor{
 				pro_zap.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
-
+						
+						// modalni dijalog https://stackoverflow.com/questions/1481405/how-to-make-a-jframe-modal-in-swing-java
+						
         				final JDialog proba=new JDialog(window,"Unesi Zaposlenog",true);
         				Dimension screenSize =Toolkit.getDefaultToolkit().getScreenSize();
         				int sirina=(int) screenSize.getWidth();
@@ -252,6 +268,9 @@ public class prozor{
 							box_data[i]=z.ime+" "+z.prezime;
 							i++;
 							}
+						
+						// kreiranje listi radjeno preko videa : https://youtu.be/aLkkYbHz16E
+						
 						JList box=new JList(box_data);
 						box.setVisibleRowCount(5);
 						box.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -335,6 +354,8 @@ public class prozor{
   				 DELETE MENU
   				 -------------------------------------------------
   				 */
+				
+				// prolazak kroz array listu uz pomoc for-a https://youtu.be/odmEIZtfBgI?list=PL_c9BZzLwBRKIMP_xNTJxi9lIgQhE51rF
 				
 				JMenu delete=new JMenu("Delete");
 				JMenuItem del_zap=new JMenuItem("Zaposleni");
@@ -805,6 +826,9 @@ public class prozor{
 		static void ispisiZaposlene(JPanel panel,List<Zaposleni> zaposleni)
 		{
 			panel.removeAll();
+			
+			// kreiranje jtable https://youtu.be/wniqpx8OQxo
+			
 			String[][] data_zap= new String[zaposleni.size()][7];
 			int i=0;
 			for (Zaposleni z:zaposleni) {
@@ -900,6 +924,9 @@ public class prozor{
 			polje_004.setBorder(null);
 			polje_004.addKeyListener(new KeyAdapter() {
 				public void keyTyped(KeyEvent e) {
+					
+					// samo unos brojeva https://stackhowto.com/how-to-make-jtextfield-accept-only-numbers/
+					
 					if(polje_004.getText().length() >=10)
 						e.consume();
 					char key=e.getKeyChar();
