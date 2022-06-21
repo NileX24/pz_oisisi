@@ -985,7 +985,7 @@ public class prozor{
 					labela[5]=polje_006.getText();
 					labela[6]=polje_007.getText();
 					int count=0;
-					for(int i=0;i<6;i++)
+					for(int i=0;i<7;i++)
 						if(labela[i].isEmpty())
 							count++;
 					
